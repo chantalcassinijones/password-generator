@@ -20,7 +20,7 @@ if (passwordLength >= 8 && passwordLength <= 128) {
   } else {
       alert('Sorry, the password must be 128 characters or less.');
   }
-  // end function and store input 
+  // the code will return all of the options you selected for your password length and character types 
   return {
     passwordLength: passwordLength,
     specialChars: specialChars,
@@ -32,8 +32,7 @@ if (passwordLength >= 8 && passwordLength <= 128) {
 
   // Function to generate password with user input
 function generatePassword(passwordLength, specialChars, numericChars, lowercasedChars, uppercasedChars) {
-  //declare empty variable which can be filled with any combination of the following characters 
-  var availableChars = '';
+  //declare empty variable and can be filled with any of the following characters depending on the user imput 
 
   if (specialChars) {
     availableChars += '@%+\\/\'!#$^?:,)(}{][~-_.';
@@ -49,21 +48,21 @@ function generatePassword(passwordLength, specialChars, numericChars, lowercased
   }
   //declare empty password variable
   var password = '';
-  //grabs random characters from those available
+  //grabs random characters from those available based on parameters and adds them to password
   for (var i = 0; i < passwordLength; i++) {
     var randomChars = Math.floor(Math.random() * availableChars.length);
     password += availableChars[randomChars];
   }
   return password; //return generated password
 }
-// Get references to the #generate element
-var generateBtn = document.querySelector('#generate');
+// Get references to the #generate element 
+var generateBtn = document.querySelector('#generate'); 
 var writtenPassword = document.querySelector('#password');
 
 // Write password to the #password input
 function writePassword() {
-  var passwordOptions = getPasswordOptions();
-
+  var passwordOptions = getPasswordOptions(); // when this fuction is called, first we activate the function getPasswordOptions to get user input
+ //then we call on the generatePassword function to actually generate the password
   if (passwordOptions) {
   var generatedPassword = generatePassword(
     passwordOptions.passwordLength,
@@ -72,10 +71,10 @@ function writePassword() {
     passwordOptions.lowercasedChars,
     passwordOptions.uppercasedChars
   );
-  writtenPassword.value = generatedPassword; // if the password is generated then it can be dispayed in textbox
+  writtenPassword.value = generatedPassword; // finally we write it in the textbox 
   }
 }
 // Add event listener to generate button
-generateBtn.addEventListener('click', writePassword); 
+generateBtn.addEventListener('click', writePassword); // if button is clicked the function writePassword is called 
 
 
