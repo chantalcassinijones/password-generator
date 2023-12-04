@@ -10,163 +10,82 @@
 //Code should validate for each input and at least one character type should be selected
 //Once prompts are answered then the password should be generated and displayed in an alert or written to the page
 
-// Array of special characters to be included in password
-var specialCharacters = [
-  '@',
-  '%',
-  '+',
-  '\\',
-  '/',
-  "'",
-  '!',
-  '#',
-  '$',
-  '^',
-  '?',
-  ':',
-  ',',
-  ')',
-  '(',
-  '}',
-  '{',
-  ']',
-  '[',
-  '~',
-  '-',
-  '_',
-  '.'
-];
 
-// Array of numeric characters to be included in password
-var numericCharacters = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+//var specialChars = '@%+\\/\'!#$^?:,)(}{][~-_.';
+//var numericChars = '0123456789';
+//var lowerCasedChars = 'abcdefghijklmnopqrstuvwxyz';
+//var upperCasedChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-// Array of lowercase characters to be included in password
-var lowerCasedCharacters = [
-  'a',
-  'b',
-  'c',
-  'd',
-  'e',
-  'f',
-  'g',
-  'h',
-  'i',
-  'j',
-  'k',
-  'l',
-  'm',
-  'n',
-  'o',
-  'p',
-  'q',
-  'r',
-  's',
-  't',
-  'u',
-  'v',
-  'w',
-  'x',
-  'y',
-  'z'
-];
-
-// Array of uppercase characters to be included in password
-var upperCasedCharacters = [
-  'A',
-  'B',
-  'C',
-  'D',
-  'E',
-  'F',
-  'G',
-  'H',
-  'I',
-  'J',
-  'K',
-  'L',
-  'M',
-  'N',
-  'O',
-  'P',
-  'Q',
-  'R',
-  'S',
-  'T',
-  'U',
-  'V',
-  'W',
-  'X',
-  'Y',
-  'Z'
-];
 
 
 // Function to prompt user for password options
+
 function getPasswordOptions() {
   var passwordChars = prompt('How many characters would you like your password to contain?');
-  
+
   if (passwordChars >= 8 && passwordChars <= 128) {
-    var includeSpecialChars = confirm('Click ok to confirm including special characters.');
-    
-    if(includeSpecialChars || includeSpecialChars === false) {
-      var includeNumberChars = confirm('Click OK to confirm number characters.');
-
-      if(includeNumberChars || includeNumberChars === false) {
-        var includeLowercaseChars = confirm('Click OK to confirm lowercase characters.');
-
-        if(includeLowercaseChars || includeLowercaseChars === false) {
-          confirm('Click OK to confirm uppercase characters.');
-    } else {
-    }
-
-    } else {
-    }
+    var specialChars = confirm('Click ok to confirm including special characters.');
+    var numericChars = confirm('Click OK to confirm number characters.');
+    var lowercasedChars = confirm('Click OK to confirm lowercase characters.');
+    var uppercasedChars = confirm('Click OK to confirm uppercase characters.');
+      generatePassword(passwordChars, specialChars, numericChars, lowercasedChars, uppercasedChars);
+  } else if (passwordChars < 8) {
+      alert('Sorry, the password must be at least 8 characters long.');
   } else {
-
+      alert('Sorry, the password must be less than 129 characters long.');
   }
- } else if (passwordChars < 8) {
-    confirm('sorry, password must be more than 7 characters');
-    } else {
-    confirm('sorry, password must be less than 129 characters');
-    
-    
-  } 
+}
+
+// Function for getting a random element from an array
+//function getRandom(password) {
+  //for (var i = 0; i < passwordChars; i++) {
+    //var randomIndex = Math.floor(Math.random() * availableChars.length);
+    //password += availableChars[randomIndex];
+  //}
+//}
+  
+
+// Function to generate password with user input
+function generatePassword(passwordChars, specialChars, numericChars, lowercasedChars, uppercasedChars) {
+  var password = '';
+  var availableChars = '';
+
+  if (specialChars) {
+    availableChars += '@%+\\/\'!#$^?:,)(}{][~-_.';
+  }
+  if (numericChars) {
+    availableChars += '0123456789';
+  }
+  if (lowercasedChars) {
+    availableChars += 'abcdefghijklmnopqrstuvwxyz';
+  }
+  if (uppercasedChars) {
+    availableChars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  }
+
+  for (var i = 0; i < passwordChars; i++) {
+    var randomIndex = Math.floor(Math.random() * availableChars.length);
+    password += availableChars[randomIndex];
+  }
+
+ //alert('Your generated password is: ' + password);
 }
 
 
-// Function for getting a random element from an array
-//function getRandom(arr) {
-   //for (var i = 0; i <= passwordLength; i++) {
-    //var randomNumber = Math.floor(Math.random() * chars.length);
-    //password += chars.substring(randomNumber, randomNumber +1);
-   //}
-  //}
-
-  //getRandom()
-  
-
-
-
-// Function to generate password with user input
-//function generatePassword() {
- 
- 
-  
-    
-  //}
 
 
 // Get references to the #generate element
-//var generateBtn = document.querySelector('#generate');
+var generateBtn = document.querySelector('#generateBtn');
 
 // Write password to the #password input
-//function writePassword() {
-  //var password = generatePassword();
-  //var passwordText = document.querySelector('#password');
+function writePassword() {
+  var writtenPassword = generatePassword();
+  var writtenPasswordText = document.querySelector('#password');
  
-  //passwordText.value = password;
-//}
+  writtenPasswordText.value = writtenPassword;
+}
 
 // Add event listener to generate button
-//generateBtn.addEventListener('click', writePassword);
+
 generateBtn.addEventListener('click', getPasswordOptions);
+generateBtn.addEventListener('click', writePassword);
