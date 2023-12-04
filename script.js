@@ -1,10 +1,3 @@
-//var specialChars = '@%+\\/\'!#$^?:,)(}{][~-_.';
-//var numericChars = '0123456789';
-//var lowerCasedChars = 'abcdefghijklmnopqrstuvwxyz';
-//var upperCasedChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-//alert('Your secure password is: ' + password);
-//generatePassword(passwordLength, specialChars, numericChars, lowercasedChars, uppercasedChars);
-
 // Function to prompt user for password options
 function getPasswordOptions() {
   var passwordLength = prompt('How many characters would you like your password to contain?');
@@ -32,7 +25,8 @@ if (passwordLength >= 8 && passwordLength <= 128) {
     passwordLength: passwordLength,
     specialChars: specialChars,
     numericChars: numericChars,
-    lowercasedChars: lowercasedChars
+    lowercasedChars: lowercasedChars,
+    uppercasedChars: uppercasedChars
   };
   }
 
@@ -57,8 +51,8 @@ function generatePassword(passwordLength, specialChars, numericChars, lowercased
   var password = '';
   //grabs random characters from those available
   for (var i = 0; i < passwordLength; i++) {
-    var randomIndex = Math.floor(Math.random() * availableChars.length);
-    password += availableChars[randomIndex];
+    var randomChars = Math.floor(Math.random() * availableChars.length);
+    password += availableChars[randomChars];
   }
   return password; //return generated password
 }
@@ -69,6 +63,7 @@ var writtenPassword = document.querySelector('#password');
 // Write password to the #password input
 function writePassword() {
   var passwordOptions = getPasswordOptions();
+
   if (passwordOptions) {
   var generatedPassword = generatePassword(
     passwordOptions.passwordLength,
@@ -77,10 +72,10 @@ function writePassword() {
     passwordOptions.lowercasedChars,
     passwordOptions.uppercasedChars
   );
-  writtenPassword.value = generatedPassword;
+  writtenPassword.value = generatedPassword; // if the password is generated then it can be dispayed in textbox
   }
 }
 // Add event listener to generate button
-generateBtn.addEventListener('click', writePassword);
-//generateBtn.addEventListener('click', getPasswordOptions);
+generateBtn.addEventListener('click', writePassword); 
+
 
